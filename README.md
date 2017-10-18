@@ -14,10 +14,10 @@ After cloning the repository or downloading and extracting an archive, run the f
 
 ```bash
 # Make the script executable (you'll only need to do this once).
-$ chmod +x ./asimov.sh
+$ chmod +x ./asimov
 
 # Run Asimov.
-$ ./asimov.sh
+$ ./asimov
 ```
 
 You may wish to schedule Asimov to run automatically, ensuring new projects are automatically excluded from backups. Don't worry about running it multiple times, Asimov is smart enough to see if a directory has already been marked for exclusion.
