@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+
+# Look through the local filesystem and exclude development dependencies
+# from Apple Time Machine backups.
+#
+# Since these files can be restored easily via their respective installation
+# tools, there's no reason to waste time/bandwidth on backing them up.
+#
+# To retrieve a full list of excluded files, you may run:
+#
+#   sudo mdfind "com_apple_backup_excludeItem = 'com.apple.backupd'"
+#
+# For a full explanation, please see https://apple.stackexchange.com/a/25833/206772
+#
+# @author  Steve Grunwell
+# @license MIT
+
+readonly FILEPATHS=(
+    "vendor ../composer.json"
+    "node_modules ../package.json"
+    ".vagrant ../Vagrantfile"
+)
+
+# Given a directory path, determine if the corresponding file (relative
+# to that directory) is available.
+#
+# For example, when looking at a /vendor directory, we may choose to
+# ensure a composer.json file is available.
+dependency_file_exists() {
+    filename=$1
+
+    read -r path;
+
+    while read -r path; do
+
+        # Return early if this is a nested dependency (e.g. node_modules
+        # inside another node_modules directory.
+        if [[ $(dirname "$path") == *"/$(basename "$path")/"* ]]; then
+            continue;
+        fi
+
+        if [ -f "${path}/${filename}" ]; then
+            echo "$path"
+        fi
+  done
+}
+
+# Exclude the given path from Time Machine backups.
+exclude_file() {
+    while read -r path; do
+        if tmutil isexcluded "$path" | grep -q '\[Excluded\]'; then
+            echo "- ${path} is already excluded, skipping."
+            continue
+        fi
+
+        tmutil addexclusion "$path"
+
+        echo "- ${path} has been excluded from Time Machine backups."
+  done
+}
+
+# Iterate over dependencies.
+for i in "${FILEPATHS[@]}"; do
+    read -ra parts <<< "$i"
+
+    printf "\\n\\033[0;36mFinding %s/ directories with corresponding %s files...\\033[0m\\n" \
+        "${parts[0]}" "${parts[1]}"
+
+    find ~/Sites -name "${parts[0]}" -type d | dependency_file_exists "${parts[1]}" | exclude_file
+done
