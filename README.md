@@ -8,25 +8,26 @@ For the average consumer, Time Machine is an excellent choice, especially consid
 
 Asimov aims to solve that problem, scanning your filesystem for known dependency directories (e.g. `node_modules/` living adjacent to a `package.json` file) and excluding them from Time Machine backups. After all, why eat up space on your backup drive for something you could easily restore via `npm install`?
 
-## Usage
+## Installation
 
-After cloning the repository or downloading and extracting an archive, run the following to automatically exclude dependencies from Time Machine backups:
+To get started with Asimov, clone the repository or download and extract an archive anywhere you'd like on your Mac (such as `/usr/local`):
 
-```bash
-# Make the script executable (you'll only need to do this once).
-$ chmod +x ./asimov
-
-# Run Asimov.
-$ ./asimov
+```sh
+$ git clone git@github.com:stevegrunwell/asimov.git /usr/local/asimov
 ```
 
-You may wish to schedule Asimov to run automatically, ensuring new projects are automatically excluded from backups. Don't worry about running it multiple times, Asimov is smart enough to see if a directory has already been marked for exclusion.
+After you've cloned the repository, run the `install.sh` script to automatically:
+* Symlink Asimov to `/usr/local/bin`, making it readily available from anywhere.
+* Schedule Asimov to run once a day, ensuring new projects' dependencies are quickly excluded from Time Machine backups.
+* Run Asimov for the first time, finding all current project dependencies adding them to Time Machine's exclusion list.
 
 ## How it works
 
 At its essence, Asimov is a simple wrapper around Apple's `tmutil` program, which provides more granular control over Time Machine.
 
 Asimov finds recognized dependency directories, verifies that the corresponding dependency file exists and, if so, tells Time Machine not to worry about backing up the dependency directory.
+
+Don't worry about running it multiple times, either. Asimov is smart enough to see if a directory has already been marked for exclusion.
 
 ### Retrieving excluded files
 
