@@ -7,6 +7,9 @@
 
 PLIST="com.stevegrunwell.asimov.plist"
 
+# Verify that Asimov is executable.
+chmod +x ./asimov
+
 # Symlink Asimov into /usr/local/bin.
 echo -e "\\033[0;36mSymlinking ${PWD}/asimov to /usr/local/bin/asimov\\033[0m"
 ln -si "${PWD}/asimov" /usr/local/bin/asimov
