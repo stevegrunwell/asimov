@@ -10,10 +10,10 @@ Asimov aims to solve that problem, scanning your filesystem for known dependency
 
 ## Installation
 
-To get started with Asimov, clone the repository or download and extract an archive anywhere you'd like on your Mac (such as `/usr/local`):
+To get started with Asimov, clone the repository or download and extract an archive anywhere you'd like on your Mac:
 
 ```sh
-$ git clone git@github.com:stevegrunwell/asimov.git /usr/local/asimov
+$ git clone git@github.com:stevegrunwell/asimov.git
 ```
 
 After you've cloned the repository, run the `install.sh` script to automatically:
