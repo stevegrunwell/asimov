@@ -12,7 +12,7 @@
 #
 # For a full explanation, please see https://apple.stackexchange.com/a/25833/206772
 #
-# @version 0.1.0
+# @version 0.2.0
 # @author  Steve Grunwell
 # @license MIT
 
@@ -67,5 +67,5 @@ for i in "${FILEPATHS[@]}"; do
     printf "\\n\\033[0;36mFinding %s/ directories with corresponding %s files...\\033[0m\\n" \
         "${parts[0]}" "${parts[1]}"
 
-    find ~/Sites -name "${parts[0]}" -type d | dependency_file_exists "${parts[1]}" | exclude_file
+    find ~ -name "${parts[0]}" -type d | dependency_file_exists "${parts[1]}" | exclude_file
 done
