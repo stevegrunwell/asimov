@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## [Unreleased]
+## [0.2.0]
 
 * Bundle the script with `com.stevegrunwell.asimov.plist`, enabling Asimov to be scheduled to run daily. Users can set this up in a single step by running the new `install.sh` script.
 * Fixed pathing issue when resolving the script directory for `install.sh`. Props @morganestes. (#7)
@@ -19,6 +19,7 @@ Initial public release.
 
 
 [Unreleased]: https://github.com/stevegrunwell/asimov/compare/master...develop
+[0.2.0]: https://github.com/stevegrunwell/asimov/releases/tag/v0.2.0
 [0.1.0]: https://github.com/stevegrunwell/asimov/releases/tag/v0.1.0
 [#10]: https://github.com/stevegrunwell/asimov/issues/10
 [#7]: https://github.com/stevegrunwell/asimov/issues/7
