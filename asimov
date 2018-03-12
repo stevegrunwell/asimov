@@ -17,6 +17,7 @@
 # @license MIT
 
 readonly FILEPATHS=(
+    "target ../src"
     "vendor ../composer.json"
     "node_modules ../package.json"
     ".vagrant ../Vagrantfile"
@@ -40,7 +41,7 @@ dependency_file_exists() {
             continue;
         fi
 
-        if [ -f "${path}/${filename}" ]; then
+        if [ -e "${path}/${filename}" ]; then
             echo "$path"
         fi
   done
