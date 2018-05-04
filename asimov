@@ -30,8 +30,6 @@ readonly FILEPATHS=(
 dependency_file_exists() {
     filename=$1
 
-    read -r path;
-
     while read -r path; do
 
         # Return early if this is a nested dependency (e.g. node_modules
