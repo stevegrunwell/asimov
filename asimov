@@ -54,7 +54,8 @@ exclude_file() {
 
         tmutil addexclusion "$path"
 
-        echo "- ${path} has been excluded from Time Machine backups."
+        sizeondisk=$(du -hs "$path" | cut -f1)
+        echo "- ${path} has been excluded from Time Machine backups ($sizeondisk)."
   done
 }
 
