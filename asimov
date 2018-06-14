@@ -71,8 +71,8 @@ for i in "${FILEPATHS[@]}"; do
 
     # Set up a variable for lookup in dependency_file_exists, using a hashed name
     # to ensure the variable name is valid
-    safe_filepath_suffix=$(md5 -qs "${parts[0]}")
-    declare "filepath_${safe_filepath_suffix}"="${parts[1]}"
+    safe_filepath="filepath_$(md5 -qs "${parts[0]}")"
+    declare "$safe_filepath"="${parts[1]}"
 
     ((n++))
 done
