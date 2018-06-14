@@ -1,5 +1,7 @@
 # Asimov
 
+[![Build Status](https://travis-ci.com/stevegrunwell/asimov.svg?branch=master)](https://travis-ci.com/stevegrunwell/asimov)
+
 > Those people who think they know everything are a great annoyance to those of us who do.<br>— Issac Asimov
 
 For macOS users, [Time Machine](https://support.apple.com/en-us/HT201250) is a no-frills, set-it-and-forget-it solution for on-site backups. Plug in an external hard drive (or configure a network storage drive), and your Mac's files are backed up.

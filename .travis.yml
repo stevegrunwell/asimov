@@ -1,0 +1,12 @@
+language: bash
+
+notifications:
+  email: never
+
+sudo: false
+
+script:
+  - shellcheck asimov *.sh
+
+matrix:
+  fast_finish: true
