@@ -20,6 +20,7 @@ readonly FILEPATHS=(
     "vendor ../composer.json"
     "node_modules ../package.json"
     ".vagrant ../Vagrantfile"
+    "bower_components ../bower.json"
 )
 
 # Given a directory path, determine if the corresponding file (relative
