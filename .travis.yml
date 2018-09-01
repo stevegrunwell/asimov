@@ -1,11 +1,17 @@
-language: bash
+language: php
 
 notifications:
   email: never
 
 sudo: false
 
+php: 7.2
+
+install:
+  - composer install --prefer-dist --no-suggest
+
 script:
+  - phpunit
   - shellcheck asimov *.sh
 
 matrix:
