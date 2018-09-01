@@ -37,4 +37,29 @@ class AsimovTest extends TestCase
             "When a $config file is present, $dependencies/ should be excluded."
         );
     }
+
+    public function testCanExcludeMultipleDependencies()
+    {
+        $this->createDirectoryStructure([
+            'Code' => [
+                'First-Project' => [
+                    'vendor'        => [],
+                    'composer.json' => 'Configuration for this platform.',
+                ],
+                'Second-Project' => [
+                    'vendor'        => [],
+                    'composer.json' => 'Configuration for this platform.',
+                ],
+            ],
+        ]);
+
+        $this->assertEquals(
+            [
+                $this->getFilepath('Code/First-Project/vendor'),
+                $this->getFilepath('Code/Second-Project/vendor'),
+            ],
+            $this->asimov(),
+            'All matches should be excluded in a single pass.'
+        );
+    }
 }
