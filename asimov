@@ -29,8 +29,6 @@ readonly FILEPATHS=(
 # For example, when looking at a /vendor directory, we may choose to
 # ensure a composer.json file is available.
 dependency_file_exists() {
-    read -r path;
-
     while read -r path; do
         safe_filepath_suffix=$(md5 -qs "$(basename "$path")")
         filename="filepath_${safe_filepath_suffix}"
