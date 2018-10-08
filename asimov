@@ -46,7 +46,7 @@ dependency_file_exists() {
 exclude_file() {
     while read -r path; do
         # Disable Spotlight indexing
-        if [ $DISABLE_SPOTLIGHT_INDEXING -a ! -f "${path}/.metadata_never_index" ]; then
+        if [ $DISABLE_SPOTLIGHT_INDEXING ] && [ ! -f "${path}/.metadata_never_index" ]; then
             touch "${path}/.metadata_never_index"
             echo "- ${path} has been excluded from Spotlight Index."
         fi
