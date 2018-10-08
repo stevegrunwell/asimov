@@ -23,6 +23,8 @@ readonly FILEPATHS=(
     "bower_components ../bower.json"
 )
 
+readonly DISABLE_SPOTLIGHT_INDEXING=false
+
 # Given a directory path, determine if the corresponding file (relative
 # to that directory) is available.
 #
@@ -44,7 +46,10 @@ dependency_file_exists() {
 exclude_file() {
     while read -r path; do
         # Disable Spotlight indexing
-        touch "${path}/.metadata_never_index"
+        if [ $DISABLE_SPOTLIGHT_INDEXING -a ! -f "${path}/.metadata_never_index" ]; then
+            touch "${path}/.metadata_never_index"
+            echo "- ${path} has been excluded from Spotlight Index."
+        fi
 
         if tmutil isexcluded "$path" | grep -q '\[Excluded\]'; then
             echo "- ${path} is already excluded, skipping."
