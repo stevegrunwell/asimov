@@ -43,6 +43,9 @@ dependency_file_exists() {
 # Exclude the given path from Time Machine backups.
 exclude_file() {
     while read -r path; do
+        # Disable Spotlight indexing
+        touch "${path}/.metadata_never_index"
+
         if tmutil isexcluded "$path" | grep -q '\[Excluded\]'; then
             echo "- ${path} is already excluded, skipping."
             continue
