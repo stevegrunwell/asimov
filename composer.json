@@ -1,32 +1,32 @@
 {
-  "name": "stevegrunwell/asimov",
-  "description": "Automatically exclude development dependencies from Apple Time Machine backups",
-  "type": "project",
-  "authors": [
-    {
-      "name": "Steve Grunwell",
-      "homepage": "https://stevegrunwell.com"
+    "name": "stevegrunwell/asimov",
+    "description": "Automatically exclude development dependencies from Apple Time Machine backups",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Steve Grunwell",
+            "homepage": "https://stevegrunwell.com"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/stevegrunwell/asimov",
+        "issues": "https://github.com/stevegrunwell/asimov/issues"
+    },
+    "license": "MIT",
+    "require-dev": {
+        "phpunit/phpunit": "^7.3"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "platform": {
+            "php": "7.2"
+        }
     }
-  ],
-  "support": {
-    "source": "https://github.com/stevegrunwell/asimov",
-    "issues": "https://github.com/stevegrunwell/asimov/issues"
-  },
-  "license": "MIT",
-  "require-dev": {
-    "phpunit/phpunit": "^7.3"
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Tests\\": "tests/"
-    }
-  },
-  "config": {
-    "preferred-install": "dist",
-    "sort-packages": true,
-    "optimize-autoloader": true,
-    "platform": {
-      "php": "7.2"
-    }
-  }
 }
