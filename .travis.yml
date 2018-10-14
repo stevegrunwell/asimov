@@ -6,7 +6,7 @@ notifications:
   email: never
 
 install:
-  - brew install composer
+  - brew install composer shellcheck
   - composer install --prefer-dist --no-suggest
 
 script:
