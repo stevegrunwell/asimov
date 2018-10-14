@@ -21,6 +21,7 @@ readonly FILEPATHS=(
     "node_modules ../package.json"
     ".vagrant ../Vagrantfile"
     "bower_components ../bower.json"
+    "target ../pom.xml"
 )
 
 # Given a directory path, determine if the corresponding file (relative
