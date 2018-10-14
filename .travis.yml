@@ -1,14 +1,9 @@
-language: php
+os: osx
+language: shell
+sudo: false
 
 notifications:
   email: never
-
-sudo: false
-
-php: 7.2
-
-before_install:
-  - phpenv config-rm xdebug.ini
 
 install:
   - composer install --prefer-dist --no-suggest
