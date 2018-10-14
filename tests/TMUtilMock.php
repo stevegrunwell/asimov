@@ -15,6 +15,11 @@ class TMUtilMock
     const DESCRIPTOR = 4;
 
     /**
+     * @var array
+     */
+    private $exclusions;
+
+    /**
      * @var resource
      */
     private $stream;
@@ -22,6 +27,9 @@ class TMUtilMock
     public function __construct()
     {
         $this->stream = fopen('php://fd/' . self::DESCRIPTOR, 'a');
+
+        // Read any exclusions set in the environment.
+        $this->exclusions = explode(',', (string) getenv('KNOWN_EXCLUSIONS'));
     }
 
     public function __destruct()
@@ -31,11 +39,20 @@ class TMUtilMock
 
     public function addexclusion(string $path)
     {
+        $this->exclusions[] = $path;
+
         fwrite($this->stream, $path . PHP_EOL);
     }
 
-    public function isexcluded(string $path): bool
+    /**
+     * Determines whether or not the given $path has already been excluded.
+     *
+     * @param string $path The filepath to check.
+     */
+    public function isexcluded(string $path)
     {
-        return false;
+        $status = in_array($path, $this->exclusions, true) ? 'Excluded' : 'Included';
+
+        fwrite(STDOUT, "[$status]\t{$path}");
     }
 }

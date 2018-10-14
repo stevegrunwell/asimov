@@ -12,9 +12,24 @@ use PHPUnit\Framework\TestCase as BaseTestCase;
 class TestCase extends BaseTestCase
 {
     /**
+     * @var array A list of known exclusions, reset before each test.
+     */
+    private $exclusions;
+
+    /**
      * @var string The temp directory that will act as our dummy home directory.
      */
     private static $homeDir;
+
+    /**
+     * Reset any exclusions.
+     *
+     * @before
+     */
+    public function resetExclusions()
+    {
+        $this->exclusions = [];
+    }
 
     /**
      * Prepare the dummy filesystem by creating a unique directory in the temp directory.
@@ -68,6 +83,9 @@ class TestCase extends BaseTestCase
     /**
      * Execute the local copy of Asimov.
      *
+     * Asimov will use the dummy copy of tmutil, which will write the excluded paths to the
+     * TMUtilMock::DESCRIPTOR file descriptor, which we can then read and parse.
+     *
      * @return array An array of excluded filepaths.
      */
     protected function asimov(): array
@@ -77,8 +95,9 @@ class TestCase extends BaseTestCase
             TMUtilMock::DESCRIPTOR => ['pipe', 'w'],
         ];
         $env = [
-            'HOME' => self::$homeDir,
-            'PATH' => __DIR__ . '/bin:' . getenv('PATH'),
+            'HOME'             => self::$homeDir,
+            'PATH'             => __DIR__ . '/bin:' . getenv('PATH'),
+            'KNOWN_EXCLUSIONS' => implode(',', $this->exclusions),
         ];
         $process = proc_open(dirname(__DIR__) . '/asimov', $descriptors, $pipes, null, $env);
 
@@ -86,11 +105,15 @@ class TestCase extends BaseTestCase
             trigger_error('Unable to call Asimov via proc_open().', E_USER_ERROR);
         }
 
-        $excluded = stream_get_contents($pipes[TMUtilMock::DESCRIPTOR]);
+        $excludedPaths = stream_get_contents($pipes[TMUtilMock::DESCRIPTOR]);
 
         proc_close($process);
 
-        return array_filter(explode(PHP_EOL, $excluded));
+        $excludedPaths = array_filter(explode(PHP_EOL, $excludedPaths));
+
+        $this->exclusions = array_merge($this->exclusions, $excludedPaths);
+
+        return $excludedPaths;
     }
 
     /**

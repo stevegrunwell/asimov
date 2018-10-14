@@ -68,4 +68,31 @@ class AsimovTest extends TestCase
             'All matches should be excluded in a single pass.'
         );
     }
+
+    /**
+     * Once a dependency has been excluded, there's no need to exclude it again.
+     *
+     * @test
+     */
+    public function it_should_only_exclude_new_matches()
+    {
+        $this->createDirectoryStructure([
+            'Code' => [
+                'My-Project' => [
+                    'vendor'        => [],
+                    'composer.json' => 'Configuration for this platform.',
+                ],
+            ],
+        ]);
+
+        $this->assertNotEmpty(
+            $this->asimov(),
+            'Asimov should have found one path on its first run.'
+        );
+
+        $this->assertEmpty(
+            $this->asimov(),
+            'Asimov should not have found any new paths on the second run.'
+        );
+    }
 }
