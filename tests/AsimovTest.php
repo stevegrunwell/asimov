@@ -18,6 +18,7 @@ class AsimovTest extends TestCase
      * @test
      * @testWith ["Bower", "bower.json", "bower_components"]
      *           ["Composer", "composer.json", "vendor"]
+     *           ["Maven", "pom.xml", "target"]
      *           ["Node", "package.json", "node_modules"]
      *           ["Vagrant", "Vagrantfile", ".vagrant"]
      */
