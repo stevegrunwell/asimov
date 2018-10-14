@@ -15,12 +15,13 @@ class AsimovTest extends TestCase
      *
      * When adding a simple pattern, please add it as a scenario for this test.
      *
+     * @test
      * @testWith ["Bower", "bower.json", "bower_components"]
      *           ["Composer", "composer.json", "vendor"]
      *           ["Node", "package.json", "node_modules"]
      *           ["Vagrant", "Vagrantfile", ".vagrant"]
      */
-    public function testExcludesDependenciesWhenConfigFileIsPresent($system, $config, $dependencies)
+    public function it_should_exclude_dependency_directories_when_a_config_file_is_present($system, $config, $dependencies)
     {
         $this->createDirectoryStructure([
             'Code' => [
@@ -38,7 +39,12 @@ class AsimovTest extends TestCase
         );
     }
 
-    public function testCanExcludeMultipleDependencies()
+    /**
+     * A run should pick up multiple dependencies, not just the first.
+     *
+     * @test
+     */
+    public function it_should_find_multiple_matches()
     {
         $this->createDirectoryStructure([
             'Code' => [
