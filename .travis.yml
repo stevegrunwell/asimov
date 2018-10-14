@@ -6,12 +6,11 @@ notifications:
   email: never
 
 install:
-  - wget -O phpunit https://phar.phpunit.de/phpunit-7.phar
-  - chmod +x phpunit
-  - ./phpunit --version
+  - brew install composer
+  - composer install --prefer-dist --no-suggest
 
 script:
-  - ./phpunit
+  - phpunit
   - shellcheck asimov *.sh
 
 matrix:
