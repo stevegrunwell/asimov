@@ -10,8 +10,7 @@ install:
   - composer install --prefer-dist --no-suggest
 
 script:
-  - ./vendor/bin/phpunit
-  - shellcheck asimov *.sh
+  - composer test
 
 matrix:
   fast_finish: true

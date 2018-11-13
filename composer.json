@@ -22,7 +22,7 @@
         }
     },
     "scripts": {
-      "test": "@php vendor/bin/phpunit"
+      "test": "sh tests/bin/run-tests.sh"
     },
     "scripts-descriptions": {
       "test": "Run the automated tests for Asimov."
