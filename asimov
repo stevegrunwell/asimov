@@ -22,6 +22,7 @@ readonly FILEPATHS=(
     ".vagrant ../Vagrantfile"
     "bower_components ../bower.json"
     "target ../pom.xml"
+    ".stack-work ../stack.yaml"
 )
 
 # Given a directory path, determine if the corresponding file (relative
