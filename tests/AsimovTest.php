@@ -10,23 +10,36 @@ namespace Tests;
 class AsimovTest extends TestCase
 {
     /**
+     * Data provider for known patterns.
+     *
+     * @return array An array of test scenarios.
+     */
+    public function recognizedPatternProvider(): array
+    {
+        return [
+            'Bower'    => ["bower.json", "bower_components"],
+            'Composer' => ["composer.json", "vendor"],
+            'Maven'    => ["pom.xml", "target"],
+            'Node'     => ["package.json", "node_modules"],
+            'Stack'    => ["stack.yaml", ".stack-work"],
+            'Vagrant'  => ["Vagrantfile", ".vagrant"],
+        ];
+    }
+
+    /**
      * A test case that catches the easiest pattern: a dependency file exists in the project
      * directory, and its dependencies are installed into an adjacent directory.
      *
      * When adding a simple pattern, please add it as a scenario for this test.
      *
      * @test
-     * @testWith ["Bower", "bower.json", "bower_components"]
-     *           ["Composer", "composer.json", "vendor"]
-     *           ["Maven", "pom.xml", "target"]
-     *           ["Node", "package.json", "node_modules"]
-     *           ["Vagrant", "Vagrantfile", ".vagrant"]
+     * @dataProvider recognizedPatternProvider()
      */
-    public function it_should_exclude_dependency_directories_when_a_config_file_is_present($system, $config, $dependencies)
+    public function it_should_exclude_dependency_directories_when_a_config_file_is_present($config, $dependencies)
     {
         $this->createDirectoryStructure([
             'Code' => [
-                "My-$system-Project" => [
+                "My-Project" => [
                     $dependencies => [],
                     $config       => 'Configuration for this platform.',
                 ],
@@ -34,7 +47,7 @@ class AsimovTest extends TestCase
         ]);
 
         $this->assertEquals(
-            [$this->getFilepath("Code/My-$system-Project/$dependencies")],
+            [$this->getFilepath("Code/My-Project/$dependencies")],
             $this->asimov(),
             "When a $config file is present, $dependencies/ should be excluded."
         );
