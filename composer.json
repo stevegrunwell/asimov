@@ -21,6 +21,12 @@
             "Tests\\": "tests/"
         }
     },
+    "scripts": {
+      "test": "@php vendor/bin/phpunit"
+    },
+    "scripts-descriptions": {
+      "test": "Run the automated tests for Asimov."
+    },
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
