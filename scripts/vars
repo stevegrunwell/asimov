@@ -1,0 +1,3 @@
+DIR="$(pwd -P)"
+BIN="/usr/local/bin/asimov"
+PLIST="com.stevegrunwell.asimov.plist"
