@@ -9,7 +9,7 @@ DIR="$(cd "$(dirname "$0")" || return; pwd -P)"
 PLIST="com.stevegrunwell.asimov.plist"
 
 # Verify that Asimov is executable.
-chmod +x ./asimov
+chmod +x "${DIR}/asimov"
 
 # Symlink Asimov into /usr/local/bin.
 echo -e "\\033[0;36mSymlinking ${DIR} to /usr/local/bin/asimov\\033[0m"
