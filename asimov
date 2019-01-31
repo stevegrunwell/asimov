@@ -57,7 +57,7 @@ exclude_file() {
 
         sizeondisk=$(du -hs "$path" | cut -f1)
         echo "- ${path} has been excluded from Time Machine backups ($sizeondisk)."
-  done
+    done
 }
 
 # Start to construct the `find` parameter arguments, based on a home directory search
