@@ -17,7 +17,22 @@ set -Eeu -o pipefail
 # @author  Steve Grunwell
 # @license MIT
 
-readonly FILEPATHS=(
+readonly ASIMOV_ROOT=~
+
+# Paths to unconditionally skip over. This prevents Asimov from modifying the
+# Time Machine exclusions for these paths (and decendents). It has an important
+# side-effect of speeding up the search.
+readonly ASIMOV_SKIP_PATHS=(
+    ~/Library
+)
+
+# A list of "directory"/"sentinel" pairs.
+# Each directory will be excluded from backup iff the sentinel file exists
+# alongside.
+#
+# For example, 'node_modules package.json' means "exclude node_modules/ from
+# backup if there is a package.json next to it."
+readonly ASIMOV_VENDOR_DIR_SENTINELS=(
     "vendor ../composer.json"
     "node_modules ../package.json"
     ".vagrant ../Vagrantfile"
@@ -64,13 +79,17 @@ exclude_file() {
     done
 }
 
-# Start to construct the `find` parameter arguments, based on a home directory search
-# but excluding ~/Library
-declare -a find_parameters=(~ -not \( -path ~/Library -prune \))
+# Start to construct the `find` parameter arguments, based on an initial directory.
+declare -a find_parameters=("${ASIMOV_ROOT}")
+
+# Iterate over the skip directories to construct the `find` expression.
+for d in "${ASIMOV_SKIP_PATHS[@]}"; do
+    find_parameters+=( -not \( -path "${d}" -prune \) )
+done
 
 # Iterate over dependencies.
 declare n=0
-for i in "${FILEPATHS[@]}"; do
+for i in "${ASIMOV_VENDOR_DIR_SENTINELS[@]}"; do
     read -ra parts <<< "${i}"
 
     # Add this folder to the `find` list, allowing a single `find` command to find all
