@@ -33,34 +33,16 @@ readonly ASIMOV_SKIP_PATHS=(
 # For example, 'node_modules package.json' means "exclude node_modules/ from
 # backup if there is a package.json next to it."
 readonly ASIMOV_VENDOR_DIR_SENTINELS=(
-    "vendor ../composer.json"
-    "node_modules ../package.json"
-    ".vagrant ../Vagrantfile"
-    "bower_components ../bower.json"
-    "target ../pom.xml"
-    ".stack-work ../stack.yaml"
-    "Carthage ../Cartfile"
-    "Pods ../Podfile"
-    ".build ../Package.swift"
+    '.build Package.swift'
+    '.stack-work stack.yaml'
+    '.vagrant Vagrantfile'
+    'Carthage Cartfile'
+    'Pods Podfile'
+    'bower_components bower.json'
+    'node_modules package.json'
+    'target pom.xml'
+    'vendor composer.json'
 )
-
-# Given a directory path, determine if the corresponding file (relative
-# to that directory) is available.
-#
-# For example, when looking at a /vendor directory, we may choose to
-# ensure a composer.json file is available.
-dependency_file_exists() {
-    local path
-    read -r path;
-
-    while read -r path; do
-        safe_filepath_suffix=$(md5 -qs "$(basename "${path}")")
-        filename="filepath_${safe_filepath_suffix}"
-        if [ -f "${path}/${!filename}" ]; then
-            echo "${path}"
-        fi
-    done
-}
 
 # Exclude the given paths from Time Machine backups.
 # Reads the newline-separated list of paths from stdin.
@@ -79,33 +61,37 @@ exclude_file() {
     done
 }
 
-# Start to construct the `find` parameter arguments, based on an initial directory.
-declare -a find_parameters=("${ASIMOV_ROOT}")
-
 # Iterate over the skip directories to construct the `find` expression.
+declare -a find_parameters_skip=()
 for d in "${ASIMOV_SKIP_PATHS[@]}"; do
-    find_parameters+=( -not \( -path "${d}" -prune \) )
+    find_parameters_skip+=( -not \( -path "${d}" -prune \) )
 done
 
-# Iterate over dependencies.
-declare n=0
+# Iterate over the directory/sentinel pairs to construct the `find` expression.
+declare -a find_parameters_vendor=()
 for i in "${ASIMOV_VENDOR_DIR_SENTINELS[@]}"; do
     read -ra parts <<< "${i}"
 
     # Add this folder to the `find` list, allowing a single `find` command to find all
-    if [ "$n" -gt "0" ]; then
-        find_parameters+=(-o)
-    fi
-    find_parameters+=(-name "${parts[0]}" -type d -prune)
+    _exclude_name="${parts[0]}"
+    _sibling_sentinel_name="${parts[1]}"
 
-    # Set up a variable for lookup in dependency_file_exists, using a hashed name
-    # to ensure the variable name is valid
-    safe_filepath="filepath_$(md5 -qs "${parts[0]}")"
-    declare "${safe_filepath}"="${parts[1]}"
-
-    ((n++))
+    # Given a directory path, determine if the corresponding file (relative
+    # to that directory) is available.
+    #
+    # For example, when looking at a /vendor directory, we may choose to
+    # ensure a composer.json file is available.
+    find_parameters_vendor+=( -or \( \
+        -type d \
+        -name "${_exclude_name}" \
+        -execdir test -e "${_sibling_sentinel_name}" \; \
+        -prune \
+        -print \
+    \) )
 done
 
 printf '\n\033[0;36mFinding dependency directories with corresponding definition files…\033[0m\n'
 
-find "${find_parameters[@]}" | dependency_file_exists | exclude_file
+find "${ASIMOV_ROOT}" \( "${find_parameters_skip[@]}" \) \( -false "${find_parameters_vendor[@]}" \) \
+    | exclude_file \
+    ;
