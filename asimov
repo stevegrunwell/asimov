@@ -50,7 +50,7 @@ dependency_file_exists() {
 exclude_file() {
     local path
     while read -r path; do
-        if tmutil isexcluded "${path}" | grep -q '\[Excluded\]'; then
+        if tmutil isexcluded "${path}" | grep -Fq '[Excluded]'; then
             echo "- ${path} is already excluded, skipping."
             continue
         fi
