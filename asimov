@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -Eeu -o pipefail
 
 # Look through the local filesystem and exclude development dependencies
 # from Apple Time Machine backups.
