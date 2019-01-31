@@ -37,10 +37,10 @@ dependency_file_exists() {
     read -r path;
 
     while read -r path; do
-        safe_filepath_suffix=$(md5 -qs "$(basename "$path")")
+        safe_filepath_suffix=$(md5 -qs "$(basename "${path}")")
         filename="filepath_${safe_filepath_suffix}"
         if [ -f "${path}/${!filename}" ]; then
-            echo "$path"
+            echo "${path}"
         fi
     done
 }
@@ -48,15 +48,15 @@ dependency_file_exists() {
 # Exclude the given path from Time Machine backups.
 exclude_file() {
     while read -r path; do
-        if tmutil isexcluded "$path" | grep -q '\[Excluded\]'; then
+        if tmutil isexcluded "${path}" | grep -q '\[Excluded\]'; then
             echo "- ${path} is already excluded, skipping."
             continue
         fi
 
-        tmutil addexclusion "$path"
+        tmutil addexclusion "${path}"
 
-        sizeondisk=$(du -hs "$path" | cut -f1)
-        echo "- ${path} has been excluded from Time Machine backups ($sizeondisk)."
+        sizeondisk=$(du -hs "${path}" | cut -f1)
+        echo "- ${path} has been excluded from Time Machine backups (${sizeondisk})."
     done
 }
 
@@ -67,7 +67,7 @@ find_parameters=(~ -not \( -path ~/Library -prune \))
 # Iterate over dependencies.
 n=0
 for i in "${FILEPATHS[@]}"; do
-    read -ra parts <<< "$i"
+    read -ra parts <<< "${i}"
 
     # Add this folder to the `find` list, allowing a single `find` command to find all
     if [ "$n" -gt "0" ]; then
@@ -78,7 +78,7 @@ for i in "${FILEPATHS[@]}"; do
     # Set up a variable for lookup in dependency_file_exists, using a hashed name
     # to ensure the variable name is valid
     safe_filepath="filepath_$(md5 -qs "${parts[0]}")"
-    declare "$safe_filepath"="${parts[1]}"
+    declare "${safe_filepath}"="${parts[1]}"
 
     ((n++))
 done
