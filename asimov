@@ -46,10 +46,11 @@ dependency_file_exists() {
     done
 }
 
-# Exclude the given path from Time Machine backups.
+# Exclude the given paths from Time Machine backups.
+# Reads the newline-separated list of paths from stdin.
 exclude_file() {
     local path
-    while read -r path; do
+    while IFS=$'\n' read -r path; do
         if tmutil isexcluded "${path}" | grep -Fq '[Excluded]'; then
             echo "- ${path} is already excluded, skipping."
             continue
