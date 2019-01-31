@@ -34,6 +34,7 @@ readonly FILEPATHS=(
 # For example, when looking at a /vendor directory, we may choose to
 # ensure a composer.json file is available.
 dependency_file_exists() {
+    local path
     read -r path;
 
     while read -r path; do
@@ -47,6 +48,7 @@ dependency_file_exists() {
 
 # Exclude the given path from Time Machine backups.
 exclude_file() {
+    local path
     while read -r path; do
         if tmutil isexcluded "${path}" | grep -q '\[Excluded\]'; then
             echo "- ${path} is already excluded, skipping."
@@ -62,10 +64,10 @@ exclude_file() {
 
 # Start to construct the `find` parameter arguments, based on a home directory search
 # but excluding ~/Library
-find_parameters=(~ -not \( -path ~/Library -prune \))
+declare -a find_parameters=(~ -not \( -path ~/Library -prune \))
 
 # Iterate over dependencies.
-n=0
+declare n=0
 for i in "${FILEPATHS[@]}"; do
     read -ra parts <<< "${i}"
 
