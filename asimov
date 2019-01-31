@@ -85,7 +85,6 @@ for i in "${FILEPATHS[@]}"; do
     ((n++))
 done
 
-
-echo -e "\\n\\033[0;36mFinding dependency directories with corresponding definition files...\\033[0m\\n"
+printf '\n\033[0;36mFinding dependency directories with corresponding definition files…\033[0m\n'
 
 find "${find_parameters[@]}" | dependency_file_exists | exclude_file
