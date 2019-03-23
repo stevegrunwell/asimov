@@ -24,6 +24,7 @@ readonly FILEPATHS=(
     "target ../pom.xml"
     ".stack-work ../stack.yaml"
     "Carthage ../Cartfile"
+    ".git HEAD"
 )
 
 # Given a directory path, determine if the corresponding file (relative
