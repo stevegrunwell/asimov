@@ -26,6 +26,7 @@ readonly FILEPATHS=(
     "Carthage ../Cartfile"
     "Pods ../Podfile"
     ".build ../Package.swift"
+    "bower_components ../bower.json"
 )
 
 # Given a directory path, determine if the corresponding file (relative
