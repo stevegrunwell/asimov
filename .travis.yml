@@ -1,9 +1,15 @@
 os: osx
 language: shell
-sudo: false
 
-notifications:
-  email: never
+matrix:
+  include:
+    - name: macOS 10.15 (Catalina)
+      osx_image: xcode11.5
+    - name: macOS 10.14 (Mojave)
+      osx_image: xcode11.3
+    - name: macOS 10.13 (High Sierra)
+      osx_image: xcode10.1
+  fast_finish: true
 
 install:
   - brew install composer shellcheck
@@ -11,6 +17,3 @@ install:
 
 script:
   - composer test
-
-matrix:
-  fast_finish: true
