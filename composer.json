@@ -17,8 +17,11 @@
         "issues": "https://github.com/stevegrunwell/asimov/issues"
     },
     "license": "MIT",
+    "require": {
+        "php": ">=7.2"
+    },
     "require-dev": {
-        "phpunit/phpunit": "^9.0"
+        "phpunit/phpunit": "^8.0|^9.0"
     },
     "autoload-dev": {
         "psr-4": {

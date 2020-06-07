@@ -12,7 +12,8 @@ matrix:
   fast_finish: true
 
 install:
-  - brew install composer php@7.3 shellcheck
+  - brew install composer shellcheck
+  - composer check-platform-reqs
   - composer install --prefer-dist --no-suggest
 
 script:
