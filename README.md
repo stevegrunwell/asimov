@@ -1,6 +1,6 @@
 # Asimov
 
-[![Build Status](https://travis-ci.com/stevegrunwell/asimov.svg?branch=master)](https://travis-ci.com/stevegrunwell/asimov)
+[![Build Status](https://travis-ci.com/stevegrunwell/asimov.svg?branch=develop)](https://travis-ci.com/stevegrunwell/asimov)
 
 > Those people who think they know everything are a great annoyance to those of us who do.<br>— Issac Asimov
 
