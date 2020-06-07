@@ -31,7 +31,7 @@ asimov
 To get started with Asimov, clone the repository or download and extract an archive anywhere you'd like on your Mac:
 
 ```sh
-$ git clone git@github.com:stevegrunwell/asimov.git
+$ git clone https://github.com/stevegrunwell/asimov.git --depth 1
 ```
 
 After you've cloned the repository, run the `install.sh` script to automatically:
