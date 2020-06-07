@@ -12,7 +12,7 @@ matrix:
   fast_finish: true
 
 install:
-  - brew install composer php7.3 shellcheck
+  - brew install composer php@7.3 shellcheck
   - composer install --prefer-dist --no-suggest
 
 script:
