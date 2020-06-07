@@ -6,7 +6,7 @@ notifications:
 sudo: false
 
 script:
-  - shellcheck asimov *.sh
+  - shellcheck asimov scripts/*.sh
 
 matrix:
   fast_finish: true
