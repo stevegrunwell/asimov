@@ -12,17 +12,20 @@ class AsimovTest extends TestCase
     /**
      * Data provider for known patterns.
      *
-     * @return array An array of test scenarios.
+     * @return array[] An array of test scenarios, in the form of "sentinel => directory".
      */
     public function recognizedPatternProvider(): array
     {
         return [
-            'Bower'    => ["bower.json", "bower_components"],
-            'Composer' => ["composer.json", "vendor"],
-            'Maven'    => ["pom.xml", "target"],
-            'Node'     => ["package.json", "node_modules"],
-            'Stack'    => ["stack.yaml", ".stack-work"],
-            'Vagrant'  => ["Vagrantfile", ".vagrant"],
+            'Bower'     => ['bower.json', 'bower_components'],
+            'Carthage'  => ['Cartfile', 'Carthage'],
+            'CocoaPods' => ['Podfile', 'Pods'],
+            'Composer'  => ['composer.json', 'vendor'],
+            'Maven'     => ['pom.xml', 'target'],
+            'Node'      => ['package.json', 'node_modules'],
+            'Stack'     => ['stack.yaml', '.stack-work'],
+            'Swift'     => ['Package.swift', '.build'],
+            'Vagrant'   => ['Vagrantfile', '.vagrant'],
         ];
     }
 

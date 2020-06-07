@@ -6,6 +6,10 @@
         {
             "name": "Steve Grunwell",
             "homepage": "https://stevegrunwell.com"
+        },
+        {
+            "name": "Sudar Muthu",
+            "homepage": "https://sudarmuthu.com"
         }
     ],
     "support": {
@@ -14,7 +18,7 @@
     },
     "license": "MIT",
     "require-dev": {
-        "phpunit/phpunit": "^7.3"
+        "phpunit/phpunit": "^9.0"
     },
     "autoload-dev": {
         "psr-4": {
@@ -29,10 +33,6 @@
     },
     "config": {
         "preferred-install": "dist",
-        "sort-packages": true,
-        "optimize-autoloader": true,
-        "platform": {
-            "php": "7.2"
-        }
+        "sort-packages": true
     }
 }
