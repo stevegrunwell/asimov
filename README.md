@@ -10,12 +10,28 @@ For the average consumer, Time Machine is an excellent choice, especially consid
 
 Asimov aims to solve that problem, scanning your filesystem for known dependency directories (e.g. `node_modules/` living adjacent to a `package.json` file) and excluding them from Time Machine backups. After all, why eat up space on your backup drive for something you could easily restore via `npm install`?
 
-## Installation
+## Installation (Homebrew)
+
+First make sure you have [Homebrew](https://brew.sh/) installed, then run:
+```sh
+brew install https://raw.githubusercontent.com/stevegrunwell/asimov/develop/Formula/asimov.rb
+```
+
+After the installation has finished, you can enable automatic startup and scheduling:
+```sh
+sudo brew services start asimov
+```
+or run manually:
+```sh
+asimov
+```
+
+## Installation (Manual)
 
 To get started with Asimov, clone the repository or download and extract an archive anywhere you'd like on your Mac:
 
 ```sh
-$ git clone git@github.com:stevegrunwell/asimov.git
+$ git clone https://github.com/stevegrunwell/asimov.git --depth 1
 ```
 
 After you've cloned the repository, run the `install.sh` script to automatically:
