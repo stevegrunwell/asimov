@@ -18,9 +18,12 @@ class AsimovTest extends TestCase
     {
         return [
             'Bower'     => ['bower.json', 'bower_components'],
+            'Bundler'   => ['Gemfile', 'vendor'],
+            'Cargo'     => ['Cargo.toml', 'target'],
             'Carthage'  => ['Cartfile', 'Carthage'],
             'CocoaPods' => ['Podfile', 'Pods'],
             'Composer'  => ['composer.json', 'vendor'],
+            'Dart'      => ['pubspec.yaml', '.packages'],
             'Maven'     => ['pom.xml', 'target'],
             'Node'      => ['package.json', 'node_modules'],
             'Stack'     => ['stack.yaml', '.stack-work'],

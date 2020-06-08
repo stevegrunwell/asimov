@@ -14,6 +14,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Exclude Stack dependencies ([#32], props @alex-kononovich)
 * Exclude Carthage dependencies ([#37], props @qvacua)
 * Exclude CocoaPods dependencies and Swift builds ([#43], props @slashmo)
+* Exclude Bundler, Cargo, and Dart dependencies ([#56])
 * Define a [Travis CI pipeline for Asimov](https://travis-ci.com/github/stevegrunwell/asimov) ([#20])
 * Add an automated test suite using PHPUnit ([#31])
 
@@ -74,3 +75,4 @@ Initial public release.
 [#43]: https://github.com/stevegrunwell/asimov/pull/43
 [#52]: https://github.com/stevegrunwell/asimov/pull/52
 [#55]: https://github.com/stevegrunwell/asimov/pull/55
+[#56]: https://github.com/stevegrunwell/asimov/pull/56

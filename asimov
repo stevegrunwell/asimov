@@ -35,14 +35,17 @@ readonly ASIMOV_SKIP_PATHS=(
 # Time Machine backups if there is a package.json file next to it."
 readonly ASIMOV_VENDOR_DIR_SENTINELS=(
     '.build Package.swift'        # Swift
+    '.packages pubspec.yaml'      # Pub (Dart)
     '.stack-work stack.yaml'      # Stack (Haskell)
     '.vagrant Vagrantfile'        # Vagrant
     'Carthage Cartfile'           # Carthage
     'Pods Podfile'                # CocoaPods
-    'bower_components bower.json' # Bower
-    'node_modules package.json'   # NodeJS
+    'bower_components bower.json' # Bower (JavaScript)
+    'node_modules package.json'   # npm, Yarn (NodeJS)
+    'target Cargo.toml'           # Cargo (Rust)
     'target pom.xml'              # Maven
-    'vendor composer.json'        # Composer
+    'vendor composer.json'        # Composer (PHP)
+    'vendor Gemfile'              # Bundler (Ruby)
 )
 
 # Exclude the given paths from Time Machine backups.
