@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+/**
+ * A mock implementation of Apple's Time Machine utility (tmutil).
+ *
+ * @package Asimov
+ */
+
+require_once dirname(__DIR__) . '/TMUtilMock.php';
+
+use Tests\TMUtilMock;
+
+if (3 > $argc) {
+    throw new \ArgumentCountError('Expected to see "tmutil", the sub-command, and the path.');
+}
+
+$tmutil = new TMUtilMock;
+
+return call_user_func([$tmutil, $argv[1]], $argv[2]);

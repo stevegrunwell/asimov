@@ -1,0 +1,41 @@
+{
+    "name": "stevegrunwell/asimov",
+    "description": "Automatically exclude development dependencies from Apple Time Machine backups",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Steve Grunwell",
+            "homepage": "https://stevegrunwell.com"
+        },
+        {
+            "name": "Sudar Muthu",
+            "homepage": "https://sudarmuthu.com"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/stevegrunwell/asimov",
+        "issues": "https://github.com/stevegrunwell/asimov/issues"
+    },
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5|^9.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+      "test": "sh tests/bin/run-tests.sh"
+    },
+    "scripts-descriptions": {
+      "test": "Run the automated tests for Asimov."
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    }
+}

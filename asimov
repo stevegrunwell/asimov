@@ -27,21 +27,21 @@ readonly ASIMOV_SKIP_PATHS=(
 )
 
 # A list of "directory"/"sentinel" pairs.
-# Each directory will be excluded from backup iff the sentinel file exists
-# alongside.
 #
-# For example, 'node_modules package.json' means "exclude node_modules/ from
-# backup if there is a package.json next to it."
+# Directories will only be excluded if the dependency ("sentinel") file exists.
+#
+# For example, 'node_modules package.json' means "exclude node_modules/ from the
+# Time Machine backups if there is a package.json file next to it."
 readonly ASIMOV_VENDOR_DIR_SENTINELS=(
-    '.build Package.swift'
-    '.stack-work stack.yaml'
-    '.vagrant Vagrantfile'
-    'Carthage Cartfile'
-    'Pods Podfile'
-    'bower_components bower.json'
-    'node_modules package.json'
-    'target pom.xml'
-    'vendor composer.json'
+    '.build Package.swift'        # Swift
+    '.stack-work stack.yaml'      # Stack (Haskell)
+    '.vagrant Vagrantfile'        # Vagrant
+    'Carthage Cartfile'           # Carthage
+    'Pods Podfile'                # CocoaPods
+    'bower_components bower.json' # Bower
+    'node_modules package.json'   # NodeJS
+    'target pom.xml'              # Maven
+    'vendor composer.json'        # Composer
 )
 
 # Exclude the given paths from Time Machine backups.
