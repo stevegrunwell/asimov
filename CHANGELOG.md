@@ -29,6 +29,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Rework the `find` command and path variables so that `find` is only run once however many FILEPATHS are set ([#18], @props @rowanbeentje, yet again 😉)
  Fix incorrect directory pruning, simplify path handling ([#36], props @rwe)
 * Recommend cloning via HTTPS rather than SSH for manual installations ([#52], props @Artoria2e5)
+* Don't look for matches in `~/.Trash` ([#55])
 
 
 ## [Version 0.2.0] — 2017-11-25
@@ -72,3 +73,4 @@ Initial public release.
 [#37]: https://github.com/stevegrunwell/asimov/pull/37
 [#43]: https://github.com/stevegrunwell/asimov/pull/43
 [#52]: https://github.com/stevegrunwell/asimov/pull/52
+[#55]: https://github.com/stevegrunwell/asimov/pull/55

@@ -23,6 +23,7 @@ readonly ASIMOV_ROOT=~
 # Time Machine exclusions for these paths (and decendents). It has an important
 # side-effect of speeding up the search.
 readonly ASIMOV_SKIP_PATHS=(
+    ~/.Trash
     ~/Library
 )
 
