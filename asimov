@@ -36,6 +36,7 @@ readonly ASIMOV_VENDOR_DIR_SENTINELS=(
     '.build Package.swift'        # Swift
     '.stack-work stack.yaml'      # Stack (Haskell)
     '.vagrant Vagrantfile'        # Vagrant
+    'target Cargo.toml'           # Cargo (Rust)
     'Carthage Cartfile'           # Carthage
     'Pods Podfile'                # CocoaPods
     'bower_components bower.json' # Bower

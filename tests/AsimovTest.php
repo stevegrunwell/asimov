@@ -18,6 +18,7 @@ class AsimovTest extends TestCase
     {
         return [
             'Bower'     => ['bower.json', 'bower_components'],
+            'Cargo'     => ['Cargo.toml', 'target'],
             'Carthage'  => ['Cartfile', 'Carthage'],
             'CocoaPods' => ['Podfile', 'Pods'],
             'Composer'  => ['composer.json', 'vendor'],
