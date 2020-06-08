@@ -112,4 +112,28 @@ class AsimovTest extends TestCase
             'Asimov should not have found any new paths on the second run.'
         );
     }
+
+    /**
+     * @test
+     * @ticket https://github.com/stevegrunwell/asimov/issues/47
+     * @runInSeparateProcess
+     */
+    public function it_should_not_check_a_users_trash_directory()
+    {
+        $this->createDirectoryStructure([
+            '.Trash' => [
+                'My-Project' => [
+                    'vendor'        => [],
+                    'composer.json' => 'Configuration for this platform.',
+                ],
+            ],
+        ]);
+
+        putenv('HOME=' . $this->getFilepath('/'));
+
+        $this->assertEmpty(
+            $this->asimov(),
+            'Asimov should not have been checking the ~/.Trash directory.'
+        );
+    }
 }
