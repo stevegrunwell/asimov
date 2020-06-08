@@ -34,6 +34,7 @@ readonly ASIMOV_SKIP_PATHS=(
 # Time Machine backups if there is a package.json file next to it."
 readonly ASIMOV_VENDOR_DIR_SENTINELS=(
     '.build Package.swift'        # Swift
+    '.packages pubspec.yaml'      # Pub (Dart)
     '.stack-work stack.yaml'      # Stack (Haskell)
     '.vagrant Vagrantfile'        # Vagrant
     'target Cargo.toml'           # Cargo (Rust)

@@ -22,6 +22,7 @@ class AsimovTest extends TestCase
             'Carthage'  => ['Cartfile', 'Carthage'],
             'CocoaPods' => ['Podfile', 'Pods'],
             'Composer'  => ['composer.json', 'vendor'],
+            'Dart'      => ['pubspec.yaml', '.packages'],
             'Maven'     => ['pom.xml', 'target'],
             'Node'      => ['package.json', 'node_modules'],
             'Stack'     => ['stack.yaml', '.stack-work'],
