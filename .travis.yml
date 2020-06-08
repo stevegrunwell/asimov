@@ -13,8 +13,12 @@ matrix:
 
 install:
   - brew install composer shellcheck
-  - composer check-platform-reqs
-  - composer install --prefer-dist --no-suggest
+  - |
+    if [[ $(php -r 'echo phpversion() . PHP_EOL;') < 7.3.1 ]]; then
+      composer update --prefer-lowest --prefer-dist --no-suggest --no-progress --no-ansi
+    else
+      composer install --prefer-dist --no-suggest --no-progress --no-ansi
+    fi
 
 script:
   - composer test
