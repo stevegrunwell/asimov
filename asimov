@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -Eeu -o pipefail
 
 # Look through the local filesystem and exclude development dependencies
 # from Apple Time Machine backups.
@@ -12,60 +13,89 @@
 #
 # For a full explanation, please see https://apple.stackexchange.com/a/25833/206772
 #
-# @version 0.2.0
+# @version 0.3.0
 # @author  Steve Grunwell
 # @license MIT
 
-readonly FILEPATHS=(
-    "vendor ../composer.json"
-    "node_modules ../package.json"
-    ".vagrant ../Vagrantfile"
+readonly ASIMOV_ROOT=~
+
+# Paths to unconditionally skip over. This prevents Asimov from modifying the
+# Time Machine exclusions for these paths (and decendents). It has an important
+# side-effect of speeding up the search.
+readonly ASIMOV_SKIP_PATHS=(
+    ~/.Trash
+    ~/Library
 )
 
-# Given a directory path, determine if the corresponding file (relative
-# to that directory) is available.
+# A list of "directory"/"sentinel" pairs.
 #
-# For example, when looking at a /vendor directory, we may choose to
-# ensure a composer.json file is available.
-dependency_file_exists() {
-    filename=$1
+# Directories will only be excluded if the dependency ("sentinel") file exists.
+#
+# For example, 'node_modules package.json' means "exclude node_modules/ from the
+# Time Machine backups if there is a package.json file next to it."
+readonly ASIMOV_VENDOR_DIR_SENTINELS=(
+    '.build Package.swift'        # Swift
+    '.packages pubspec.yaml'      # Pub (Dart)
+    '.stack-work stack.yaml'      # Stack (Haskell)
+    '.vagrant Vagrantfile'        # Vagrant
+    'Carthage Cartfile'           # Carthage
+    'Pods Podfile'                # CocoaPods
+    'bower_components bower.json' # Bower (JavaScript)
+    'node_modules package.json'   # npm, Yarn (NodeJS)
+    'target Cargo.toml'           # Cargo (Rust)
+    'target pom.xml'              # Maven
+    'vendor composer.json'        # Composer (PHP)
+    'vendor Gemfile'              # Bundler (Ruby)
+)
 
-    read -r path;
-
-    while read -r path; do
-
-        # Return early if this is a nested dependency (e.g. node_modules
-        # inside another node_modules directory.
-        if [[ $(dirname "$path") == *"/$(basename "$path")/"* ]]; then
-            continue;
-        fi
-
-        if [ -f "${path}/${filename}" ]; then
-            echo "$path"
-        fi
-  done
-}
-
-# Exclude the given path from Time Machine backups.
+# Exclude the given paths from Time Machine backups.
+# Reads the newline-separated list of paths from stdin.
 exclude_file() {
-    while read -r path; do
-        if tmutil isexcluded "$path" | grep -q '\[Excluded\]'; then
+    local path
+    while IFS=$'\n' read -r path; do
+        if tmutil isexcluded "${path}" | grep -Fq '[Excluded]'; then
             echo "- ${path} is already excluded, skipping."
             continue
         fi
 
-        tmutil addexclusion "$path"
+        tmutil addexclusion "${path}"
 
-        echo "- ${path} has been excluded from Time Machine backups."
-  done
+        sizeondisk=$(du -hs "${path}" | cut -f1)
+        echo "- ${path} has been excluded from Time Machine backups (${sizeondisk})."
+    done
 }
 
-# Iterate over dependencies.
-for i in "${FILEPATHS[@]}"; do
-    read -ra parts <<< "$i"
-
-    printf "\\n\\033[0;36mFinding %s/ directories with corresponding %s files...\\033[0m\\n" \
-        "${parts[0]}" "${parts[1]}"
-
-    find ~ -name "${parts[0]}" -type d | dependency_file_exists "${parts[1]}" | exclude_file
+# Iterate over the skip directories to construct the `find` expression.
+declare -a find_parameters_skip=()
+for d in "${ASIMOV_SKIP_PATHS[@]}"; do
+    find_parameters_skip+=( -not \( -path "${d}" -prune \) )
 done
+
+# Iterate over the directory/sentinel pairs to construct the `find` expression.
+declare -a find_parameters_vendor=()
+for i in "${ASIMOV_VENDOR_DIR_SENTINELS[@]}"; do
+    read -ra parts <<< "${i}"
+
+    # Add this folder to the `find` list, allowing a single `find` command to find all
+    _exclude_name="${parts[0]}"
+    _sibling_sentinel_name="${parts[1]}"
+
+    # Given a directory path, determine if the corresponding file (relative
+    # to that directory) is available.
+    #
+    # For example, when looking at a /vendor directory, we may choose to
+    # ensure a composer.json file is available.
+    find_parameters_vendor+=( -or \( \
+        -type d \
+        -name "${_exclude_name}" \
+        -execdir test -e "${_sibling_sentinel_name}" \; \
+        -prune \
+        -print \
+    \) )
+done
+
+printf '\n\033[0;36mFinding dependency directories with corresponding definition files…\033[0m\n'
+
+find "${ASIMOV_ROOT}" \( "${find_parameters_skip[@]}" \) \( -false "${find_parameters_vendor[@]}" \) \
+    | exclude_file \
+    ;

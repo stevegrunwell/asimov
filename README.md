@@ -1,5 +1,9 @@
 # Asimov
 
+[![Build Status](https://travis-ci.com/stevegrunwell/asimov.svg?branch=develop)](https://travis-ci.com/stevegrunwell/asimov)
+![Requires macOS 10.13 (High Sierra) or newer](https://img.shields.io/badge/macOS-10.13%20or%20higher-blue)
+[![MIT license](https://img.shields.io/badge/license-MIT-green)](LICENSE.txt)
+
 > Those people who think they know everything are a great annoyance to those of us who do.<br>— Issac Asimov
 
 For macOS users, [Time Machine](https://support.apple.com/en-us/HT201250) is a no-frills, set-it-and-forget-it solution for on-site backups. Plug in an external hard drive (or configure a network storage drive), and your Mac's files are backed up.
@@ -8,18 +12,50 @@ For the average consumer, Time Machine is an excellent choice, especially consid
 
 Asimov aims to solve that problem, scanning your filesystem for known dependency directories (e.g. `node_modules/` living adjacent to a `package.json` file) and excluding them from Time Machine backups. After all, why eat up space on your backup drive for something you could easily restore via `npm install`?
 
+
 ## Installation
 
-To get started with Asimov, clone the repository or download and extract an archive anywhere you'd like on your Mac:
+Asimov may be installed in a few different ways:
+
+### Installation via Homebrew
+
+The easiest way to install Asimov is through [Homebrew](https://brew.sh):
 
 ```sh
-$ git clone git@github.com:stevegrunwell/asimov.git
+$ brew install asimov
+```
+
+If you would prefer to use the latest development release, you may append the `--head` flag:
+
+```sh
+$ brew install asimov --head
+```
+
+Once installed, you may instruct Homebrew to automatically load the scheduled job, ensuring Asimov is being run automatically every day:
+
+```sh
+$ sudo brew services start asimov
+```
+
+If you don't need or want the scheduled job, you may run Asimov on-demand:
+
+```sh
+$ asimov
+```
+
+### Manual installation
+
+If you would prefer to install Asimov manually, you can do so by cloning the repository (or downloading and extracting an archive of the source) anywhere on your Mac:
+
+```sh
+$ git clone https://github.com/stevegrunwell/asimov.git --depth 1
 ```
 
 After you've cloned the repository, run the `install.sh` script to automatically:
 * Symlink Asimov to `/usr/local/bin`, making it readily available from anywhere.
 * Schedule Asimov to run once a day, ensuring new projects' dependencies are quickly excluded from Time Machine backups.
 * Run Asimov for the first time, finding all current project dependencies adding them to Time Machine's exclusion list.
+
 
 ## How it works
 

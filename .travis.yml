@@ -1,0 +1,24 @@
+os: osx
+language: shell
+
+matrix:
+  include:
+    - name: macOS 10.15 (Catalina)
+      osx_image: xcode11.5
+    - name: macOS 10.14 (Mojave)
+      osx_image: xcode11.3
+    - name: macOS 10.13 (High Sierra)
+      osx_image: xcode10.1
+  fast_finish: true
+
+install:
+  - brew install composer shellcheck
+  - |
+    if [[ $(php -r 'echo phpversion() . PHP_EOL;') < 7.3.1 ]]; then
+      composer update --prefer-lowest --prefer-dist --no-suggest --no-progress --no-ansi
+    else
+      composer install --prefer-dist --no-suggest --no-progress --no-ansi
+    fi
+
+script:
+  - composer test
