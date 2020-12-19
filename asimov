@@ -47,6 +47,7 @@ readonly ASIMOV_VENDOR_DIR_SENTINELS=(
     'build build.gradle'          # Gradle
     'vendor composer.json'        # Composer (PHP)
     'vendor Gemfile'              # Bundler (Ruby)
+    'DerivedData DerivedData'     # XCode (Swift)
 )
 
 # Exclude the given paths from Time Machine backups.
