@@ -29,6 +29,7 @@ class AsimovTest extends TestCase
             'Stack'     => ['stack.yaml', '.stack-work'],
             'Swift'     => ['Package.swift', '.build'],
             'Vagrant'   => ['Vagrantfile', '.vagrant'],
+            'XCode'     => ['DerivedData', 'DerivedData'],
         ];
     }
 
