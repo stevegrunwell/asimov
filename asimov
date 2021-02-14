@@ -40,7 +40,7 @@ fi
 
 ASIMOV_SKIP_PATHS=()
 while IFS= read -r line || [[ "$line" ]]; do
-  ASIMOV_SKIP_PATHS+=("$(echo ~/"$line")")
+  ASIMOV_SKIP_PATHS+=(~/"$line")
 done < ${ASIMOV_SKIP_PATHS_FILE}
 
 
