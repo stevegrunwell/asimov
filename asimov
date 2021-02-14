@@ -34,13 +34,13 @@ fi
 # side-effect of speeding up the search.
 if [ ! -f "$ASIMOV_SKIP_PATHS_FILE" ]; then
   echo "init config file ${ASIMOV_SKIP_PATHS_FILE}"
-  echo "~/.Trash" >> ${ASIMOV_SKIP_PATHS_FILE}
-  echo "~/Library" >> ${ASIMOV_SKIP_PATHS_FILE}
+  echo ".Trash" >> ${ASIMOV_SKIP_PATHS_FILE}
+  echo "Library" >> ${ASIMOV_SKIP_PATHS_FILE}
 fi
 
 ASIMOV_SKIP_PATHS=()
 while IFS= read -r line || [[ "$line" ]]; do
-  ASIMOV_SKIP_PATHS+=("$(eval echo "$line")")
+  ASIMOV_SKIP_PATHS+=("$(echo ~/"$line")")
 done < ${ASIMOV_SKIP_PATHS_FILE}
 
 
@@ -53,19 +53,21 @@ done < ${ASIMOV_SKIP_PATHS_FILE}
 if [ ! -f "$ASIMOV_VENDOR_DIR_SENTINELS_FILE" ]
 then
   echo "init config file ${ASIMOV_VENDOR_DIR_SENTINELS_FILE}"
-  echo ".build Package.swift        # Swift" >> ${ASIMOV_VENDOR_DIR_SENTINELS_FILE}
-  echo ".packages pubspec.yaml      # Pub (Dart)" >> ${ASIMOV_VENDOR_DIR_SENTINELS_FILE}
-  echo ".stack-work stack.yaml      # Stack (Haskell)" >> ${ASIMOV_VENDOR_DIR_SENTINELS_FILE}
-  echo ".vagrant Vagrantfile        # Vagrant" >> ${ASIMOV_VENDOR_DIR_SENTINELS_FILE}
-  echo "Carthage Cartfile           # Carthage" >> ${ASIMOV_VENDOR_DIR_SENTINELS_FILE}
-  echo "Pods Podfile                # CocoaPods" >> ${ASIMOV_VENDOR_DIR_SENTINELS_FILE}
-  echo "bower_components bower.json # Bower (JavaScript)" >> ${ASIMOV_VENDOR_DIR_SENTINELS_FILE}
-  echo "node_modules package.json   # npm, Yarn (NodeJS)" >> ${ASIMOV_VENDOR_DIR_SENTINELS_FILE}
-  echo "target Cargo.toml           # Cargo (Rust)" >> ${ASIMOV_VENDOR_DIR_SENTINELS_FILE}
-  echo "target pom.xml              # Maven" >> ${ASIMOV_VENDOR_DIR_SENTINELS_FILE}
-  echo "build build.gradle          # Gradle" >> ${ASIMOV_VENDOR_DIR_SENTINELS_FILE}
-  echo "vendor composer.json        # Composer (PHP)" >> ${ASIMOV_VENDOR_DIR_SENTINELS_FILE}
-  echo "vendor Gemfile              # Bundler (Ruby)" >> ${ASIMOV_VENDOR_DIR_SENTINELS_FILE}
+  {
+    echo ".build Package.swift        # Swift"
+    echo ".packages pubspec.yaml      # Pub (Dart)"
+    echo ".stack-work stack.yaml      # Stack (Haskell)"
+    echo ".vagrant Vagrantfile        # Vagrant"
+    echo "Carthage Cartfile           # Carthage"
+    echo "Pods Podfile                # CocoaPods"
+    echo "bower_components bower.json # Bower (JavaScript)"
+    echo "node_modules package.json   # npm, Yarn (NodeJS)"
+    echo "target Cargo.toml           # Cargo (Rust)"
+    echo "target pom.xml              # Maven"
+    echo "build build.gradle          # Gradle"
+    echo "vendor composer.json        # Composer (PHP)"
+    echo "vendor Gemfile              # Bundler (Ruby)"
+  } >> ${ASIMOV_VENDOR_DIR_SENTINELS_FILE}
 fi
 
 ASIMOV_VENDOR_DIR_SENTINELS=()
