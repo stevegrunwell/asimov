@@ -18,14 +18,31 @@ set -Eeu -o pipefail
 # @license MIT
 
 readonly ASIMOV_ROOT=~
+readonly ASIMOV_CONFIG_DIR=~/.asimov
+readonly ASIMOV_VENDOR_DIR_SENTINELS_FILE=${ASIMOV_CONFIG_DIR}/sentinels
+readonly ASIMOV_SKIP_PATHS_FILE=${ASIMOV_CONFIG_DIR}/skip
+
+# create config folder
+if [ ! -d "${ASIMOV_CONFIG_DIR}" ]
+then
+  echo "create config folder ${ASIMOV_CONFIG_DIR}"
+  mkdir ${ASIMOV_CONFIG_DIR}
+fi
 
 # Paths to unconditionally skip over. This prevents Asimov from modifying the
 # Time Machine exclusions for these paths (and decendents). It has an important
 # side-effect of speeding up the search.
-readonly ASIMOV_SKIP_PATHS=(
-    ~/.Trash
-    ~/Library
-)
+if [ ! -f "$ASIMOV_SKIP_PATHS_FILE" ]; then
+  echo "init config file ${ASIMOV_SKIP_PATHS_FILE}"
+  echo ".Trash" >> ${ASIMOV_SKIP_PATHS_FILE}
+  echo "Library" >> ${ASIMOV_SKIP_PATHS_FILE}
+fi
+
+ASIMOV_SKIP_PATHS=()
+while IFS= read -r line || [[ "$line" ]]; do
+  ASIMOV_SKIP_PATHS+=(~/"$line")
+done < ${ASIMOV_SKIP_PATHS_FILE}
+
 
 # A list of "directory"/"sentinel" pairs.
 #
@@ -33,21 +50,30 @@ readonly ASIMOV_SKIP_PATHS=(
 #
 # For example, 'node_modules package.json' means "exclude node_modules/ from the
 # Time Machine backups if there is a package.json file next to it."
-readonly ASIMOV_VENDOR_DIR_SENTINELS=(
-    '.build Package.swift'        # Swift
-    '.packages pubspec.yaml'      # Pub (Dart)
-    '.stack-work stack.yaml'      # Stack (Haskell)
-    '.vagrant Vagrantfile'        # Vagrant
-    'Carthage Cartfile'           # Carthage
-    'Pods Podfile'                # CocoaPods
-    'bower_components bower.json' # Bower (JavaScript)
-    'node_modules package.json'   # npm, Yarn (NodeJS)
-    'target Cargo.toml'           # Cargo (Rust)
-    'target pom.xml'              # Maven
-    'build build.gradle'          # Gradle
-    'vendor composer.json'        # Composer (PHP)
-    'vendor Gemfile'              # Bundler (Ruby)
-)
+if [ ! -f "$ASIMOV_VENDOR_DIR_SENTINELS_FILE" ]
+then
+  echo "init config file ${ASIMOV_VENDOR_DIR_SENTINELS_FILE}"
+  {
+    echo ".build Package.swift        # Swift"
+    echo ".packages pubspec.yaml      # Pub (Dart)"
+    echo ".stack-work stack.yaml      # Stack (Haskell)"
+    echo ".vagrant Vagrantfile        # Vagrant"
+    echo "Carthage Cartfile           # Carthage"
+    echo "Pods Podfile                # CocoaPods"
+    echo "bower_components bower.json # Bower (JavaScript)"
+    echo "node_modules package.json   # npm, Yarn (NodeJS)"
+    echo "target Cargo.toml           # Cargo (Rust)"
+    echo "target pom.xml              # Maven"
+    echo "build build.gradle          # Gradle"
+    echo "vendor composer.json        # Composer (PHP)"
+    echo "vendor Gemfile              # Bundler (Ruby)"
+  } >> ${ASIMOV_VENDOR_DIR_SENTINELS_FILE}
+fi
+
+ASIMOV_VENDOR_DIR_SENTINELS=()
+while IFS= read -r line || [[ "$line" ]]; do
+  ASIMOV_VENDOR_DIR_SENTINELS+=("$line")
+done < ${ASIMOV_VENDOR_DIR_SENTINELS_FILE}
 
 # Exclude the given paths from Time Machine backups.
 # Reads the newline-separated list of paths from stdin.
@@ -69,12 +95,23 @@ exclude_file() {
 # Iterate over the skip directories to construct the `find` expression.
 declare -a find_parameters_skip=()
 for d in "${ASIMOV_SKIP_PATHS[@]}"; do
+    # safety against empty lines in the config file
+    if [ -z "${d}" ]
+    then
+      continue
+    fi
     find_parameters_skip+=( -not \( -path "${d}" -prune \) )
 done
 
 # Iterate over the directory/sentinel pairs to construct the `find` expression.
 declare -a find_parameters_vendor=()
 for i in "${ASIMOV_VENDOR_DIR_SENTINELS[@]}"; do
+    # safety against empty lines in the config file
+    if [ -z "${i}" ]
+    then
+      continue
+    fi
+
     read -ra parts <<< "${i}"
 
     # Add this folder to the `find` list, allowing a single `find` command to find all
