@@ -20,6 +20,7 @@ set -Eeu -o pipefail
 readonly ASIMOV_ROOT=~
 readonly ASIMOV_CONFIG_DIR=~/.asimov
 readonly ASIMOV_VENDOR_DIR_SENTINELS_FILE=${ASIMOV_CONFIG_DIR}/sentinels
+readonly ASIMOV_FIXED_DIR_SENTINELS_FILE=${ASIMOV_CONFIG_DIR}/sentinels_fixed
 readonly ASIMOV_SKIP_PATHS_FILE=${ASIMOV_CONFIG_DIR}/skip
 
 # create config folder
@@ -131,6 +132,30 @@ for i in "${ASIMOV_VENDOR_DIR_SENTINELS[@]}"; do
         -print \
     \) )
 done
+
+# A list of "directories".
+#
+# Directories will be excluded from the root folder
+# example :
+# .nvm   # will exclude ~/.nvm from backups
+#
+# Iterate over the backup-excluded paths to construct the `find` expression.
+if [ -f "$ASIMOV_FIXED_DIR_SENTINELS_FILE" ]
+then
+  while IFS= read -r line || [[ "$line" ]]; do
+    # safety against empty lines in the config file
+    if [ -z "${line}" ]
+    then
+      continue
+    fi
+
+    find_parameters_vendor+=( -or \( \
+        -path ~/"${line}" \
+        -prune \
+        -print \
+    \) )
+  done < ${ASIMOV_FIXED_DIR_SENTINELS_FILE}
+fi
 
 printf '\n\033[0;36mFinding dependency directories with corresponding definition files…\033[0m\n'
 
