@@ -37,6 +37,7 @@ readonly ASIMOV_VENDOR_DIR_SENTINELS=(
     '.build Package.swift'        # Swift
     '.gradle build.gradle'        # Gradle
     '.gradle build.gradle.kts'    # Gradle Kotlin Script
+    '.dart_tool pubspec.yaml'     # Flutter (Dart)
     '.packages pubspec.yaml'      # Pub (Dart)
     '.stack-work stack.yaml'      # Stack (Haskell)
     '.vagrant Vagrantfile'        # Vagrant
@@ -48,6 +49,7 @@ readonly ASIMOV_VENDOR_DIR_SENTINELS=(
     'target pom.xml'              # Maven
     'build build.gradle'          # Gradle
     'build build.gradle.kts'      # Gradle Kotlin Script
+    'build pubspec.yaml'          # Flutter (Dart)
     'vendor composer.json'        # Composer (PHP)
     'vendor Gemfile'              # Bundler (Ruby)
 )
