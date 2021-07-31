@@ -35,6 +35,8 @@ readonly ASIMOV_SKIP_PATHS=(
 # Time Machine backups if there is a package.json file next to it."
 readonly ASIMOV_VENDOR_DIR_SENTINELS=(
     '.build Package.swift'        # Swift
+    '.gradle build.gradle'        # Gradle
+    '.gradle build.gradle.kts'    # Gradle Kotlin Script
     '.packages pubspec.yaml'      # Pub (Dart)
     '.stack-work stack.yaml'      # Stack (Haskell)
     '.vagrant Vagrantfile'        # Vagrant
@@ -45,6 +47,7 @@ readonly ASIMOV_VENDOR_DIR_SENTINELS=(
     'target Cargo.toml'           # Cargo (Rust)
     'target pom.xml'              # Maven
     'build build.gradle'          # Gradle
+    'build build.gradle.kts'      # Gradle Kotlin Script
     'vendor composer.json'        # Composer (PHP)
     'vendor Gemfile'              # Bundler (Ruby)
 )
