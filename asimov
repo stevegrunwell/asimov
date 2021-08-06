@@ -56,6 +56,7 @@ readonly ASIMOV_VENDOR_DIR_SENTINELS=(
     'target pom.xml'              # Maven
     'vendor composer.json'        # Composer (PHP)
     'vendor Gemfile'              # Bundler (Ruby)
+    'vendor go.mod'               # Go Modules (Golang)
     'venv requirements.txt'       # virtualenv (Python)
 )
 
