@@ -45,6 +45,7 @@ readonly ASIMOV_VENDOR_DIR_SENTINELS=(
     'target Cargo.toml'           # Cargo (Rust)
     'target pom.xml'              # Maven
     'build build.gradle'          # Gradle
+    'build build.gradle.kts'      # Gradle kotlin
     'vendor composer.json'        # Composer (PHP)
     'vendor Gemfile'              # Bundler (Ruby)
 )
