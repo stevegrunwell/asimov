@@ -58,6 +58,8 @@ readonly ASIMOV_VENDOR_DIR_SENTINELS=(
     'vendor Gemfile'              # Bundler (Ruby)
     'vendor go.mod'               # Go Modules (Golang)
     'venv requirements.txt'       # virtualenv (Python)
+    'deps mix.exs'                # Mix dependencies (Elixir)
+    '.build mix.exs'              # Mix build files (Elixir)
 )
 
 # Exclude the given paths from Time Machine backups.
