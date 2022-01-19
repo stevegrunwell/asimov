@@ -25,6 +25,20 @@ readonly ASIMOV_ROOT=~
 readonly ASIMOV_SKIP_PATHS=(
     ~/.Trash
     ~/Library
+
+    # for gradle big files
+    ~/.gradle/caches
+    ~/.gradle/jdks
+    ~/.gradle/wrapper
+
+    # for maven repo
+    ~/.m2/repository
+
+    # for jetbrains ide build caches
+    ~/Library/Caches/JetBrains
+
+    # for android
+     ~/Library/Android
 )
 
 # A list of "directory"/"sentinel" pairs.
