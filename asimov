@@ -43,6 +43,7 @@ readonly ASIMOV_VENDOR_DIR_SENTINELS=(
     '.tox tox.ini'                # Tox (Python)
     '.vagrant Vagrantfile'        # Vagrant
     '.venv requirements.txt'      # virtualenv (Python)
+    '.venv pyproject.toml'        # virtualenv (Python)
     'Carthage Cartfile'           # Carthage
     'Pods Podfile'                # CocoaPods
     'bower_components bower.json' # Bower (JavaScript)
