@@ -41,6 +41,7 @@ readonly ASIMOV_VENDOR_DIR_SENTINELS=(
     '.packages pubspec.yaml'      # Pub (Dart)
     '.stack-work stack.yaml'      # Stack (Haskell)
     '.tox tox.ini'                # Tox (Python)
+    '.nox noxfile.py'             # Nox (Python)
     '.vagrant Vagrantfile'        # Vagrant
     '.venv requirements.txt'      # virtualenv (Python)
     '.venv pyproject.toml'        # virtualenv (Python)
