@@ -37,6 +37,8 @@ readonly ASIMOV_VENDOR_DIR_SENTINELS=(
     '.build Package.swift'             # Swift
     '.gradle build.gradle'             # Gradle
     '.gradle build.gradle.kts'         # Gradle Kotlin Script
+    'build build.gradle'               # Gradle build files
+    'build build.gradle.kts'           # Gradle Kotlin Script build files
     '.dart_tool pubspec.yaml'          # Flutter (Dart)
     '.packages pubspec.yaml'           # Pub (Dart)
     '.stack-work stack.yaml'           # Stack (Haskell)
