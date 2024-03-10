@@ -69,6 +69,7 @@ readonly ASIMOV_VENDOR_DIR_SENTINELS=(
     '.build mix.exs'                   # Mix build files (Elixir)
     '.terraform.d .terraformrc'        # Terraform plugin cache
     '.terragrunt-cache terragrunt.hcl' # Terragrunt
+    'cdk.out cdk.json'                 # AWS CDK
 )
 
 # Exclude the given paths from Time Machine backups.
