@@ -56,6 +56,7 @@ readonly ASIMOV_VENDOR_DIR_SENTINELS=(
     'build setup.py'                   # Python
     'dist setup.py'                    # PyPI Publishing (Python)
     'node_modules package.json'        # npm, Yarn (NodeJS)
+    '.parcel-cache package.json'       # Parcel v2 cache (JavaScript)
     'target Cargo.toml'                # Cargo (Rust)
     'target pom.xml'                   # Maven
     'target build.sbt'                 # Sbt (Scala)
