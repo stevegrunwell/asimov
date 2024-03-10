@@ -25,6 +25,7 @@ readonly ASIMOV_ROOT=~
 readonly ASIMOV_SKIP_PATHS=(
     ~/.Trash
     ~/Library
+    ~/.nuget/packages #nuget packages for dotnet projects
 )
 
 # A list of "directory"/"sentinel" pairs.
