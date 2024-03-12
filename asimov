@@ -72,6 +72,26 @@ readonly ASIMOV_VENDOR_DIR_SENTINELS=(
     'cdk.out cdk.json'                 # AWS CDK
 )
 
+# A list of "fixed directories".
+#
+# Directories will be always excluded
+readonly ASIMOV_FIXED_DIRS=(
+  ~/.cache
+  ~/.dts
+  ~/.kube/cache
+  ~/.kube/http-cache
+  ~/.m2
+  ~/.npm/_cacache
+  ~/.npm/_logs
+  ~/.nvm/.cache
+  ~/.nvm/versions
+  ~/.rvm/archives
+  ~/.sdkman/archives
+  ~/.sdkman/tmp
+  ~/.serverless/cache
+  ~/.serverless/tracking-cache
+)
+
 # Exclude the given paths from Time Machine backups.
 # Reads the newline-separated list of paths from stdin.
 exclude_file() {
@@ -123,3 +143,7 @@ printf '\n\033[0;36mFinding dependency directories with corresponding definition
 find "${ASIMOV_ROOT}" \( "${find_parameters_skip[@]}" \) \( -false "${find_parameters_vendor[@]}" \) \
     | exclude_file \
     ;
+
+for dir in "${ASIMOV_FIXED_DIRS[@]}"; do
+  echo "${dir}" | exclude_file
+done
